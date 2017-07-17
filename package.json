@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/spaceraccoon/eli-calendar#readme",
   "dependencies": {
+    "css-loader": "^0.28.4",
     "express": "^4.15.3",
-    "password-generator": "^2.1.0"
+    "password-generator": "^2.1.0",
+    "style-loader": "^0.18.2"
   }
 }
