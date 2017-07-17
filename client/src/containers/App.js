@@ -7,7 +7,7 @@ import {
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import './Calendar.css';
 import Header from './Header';
-import Calendar from './Test';
+import Calendar from './Calendar';
 import Sidebar from './Sidebar';
 
 class App extends Component {

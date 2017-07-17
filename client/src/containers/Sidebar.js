@@ -11,8 +11,6 @@ class Sidebar extends Component {
 			<div className='fc-event'>My Event 5</div>
 		</div>;
   }
-
-
 }
 
 export default Sidebar;
