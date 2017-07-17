@@ -5,6 +5,7 @@ import {
 } from 'react-foundation';
 
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import './Calendar.css';
 import Header from './Header';
 import Calendar from './Test';
 import Sidebar from './Sidebar';
