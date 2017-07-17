@@ -8,8 +8,6 @@ import App from './containers/App';
 import registerServiceWorker from './registerServiceWorker';
 import reducers from './redux/reducers';
 
-import './assets/css/app.css';
-
 const createStoreWithMiddleware = applyMiddleware()(createStore);
 const store = createStoreWithMiddleware(reducers);
 
