@@ -4300,7 +4300,6 @@ button,
     display: block;
     width: 150px;
     height: 60px;
-    background-image: url(/sites/all/themes/yalenew_base/images/yaleu-logo-ie.png);
     background-repeat: no-repeat;
     zoom: 1; } }
 
@@ -4381,18 +4380,6 @@ button.menu-icon {
 
 .hero h1 {
   color: #fff; }
-
-.hero-demo {
-  position: relative;
-  margin: 0 auto;
-  display: block;
-  width: 80%;
-  height: 0;
-  padding-top: 37%;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-image: url(../img/demo.png);
-  background-position: center; }
 
 /* Yale Tabs :: Components
 -------------------------------------- */
