@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   Row,
   Column,
@@ -10,8 +11,13 @@ import './Calendar.css';
 import Header from './Header';
 import Calendar from './Calendar';
 import Sidebar from './Sidebar';
+import * as actions from '../redux/actions';
 
 class App extends Component {
+  componentDidMount() {
+    this.props.fetchEvents();
+  }
+
   render() {
     return (
       <div className="App">
@@ -29,4 +35,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(null, actions)(App);

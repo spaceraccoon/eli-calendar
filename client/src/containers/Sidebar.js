@@ -4,6 +4,9 @@ import _ from 'lodash';
 
 class Sidebar extends Component {
   renderEvents() {
+    if(!this.props.events.length) {
+      return 'Loading events...'
+    }
     return _.map(this.props.events, event => {
       return (
         <li className="list-group-item" key={event.title}>
