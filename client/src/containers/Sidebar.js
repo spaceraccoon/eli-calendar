@@ -1,16 +1,30 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import _ from 'lodash';
 
 class Sidebar extends Component {
+  renderEvents() {
+    return _.map(this.props.events, event => {
+      return (
+        <li className="list-group-item" key={event.title}>
+          {event.title}
+        </li>
+      )
+    })
+  }
+
   render() {
     return <div id='external-events'>
 			<h3>Events</h3>
-			<div className='fc-event'>My Event 1</div>
-			<div className='fc-event'>My Event 2</div>
-			<div className='fc-event'>My Event 3</div>
-			<div className='fc-event'>My Event 4</div>
-			<div className='fc-event'>My Event 5</div>
+      <ul className="list-group">
+          {this.renderEvents()}
+        </ul>
 		</div>;
   }
 }
 
-export default Sidebar;
+function mapStateToProps(state) {
+  return { events: state.events };
+}
+
+export default connect(mapStateToProps)(Sidebar);
