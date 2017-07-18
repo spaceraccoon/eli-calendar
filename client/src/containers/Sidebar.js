@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
+import DraggableEvent from './DraggableEvent';
+
 class Sidebar extends Component {
   renderEvents() {
     if(!this.props.events.length) {
@@ -9,20 +11,18 @@ class Sidebar extends Component {
     }
     return _.map(this.props.events, event => {
       return (
-        <li className="list-group-item" key={event.title}>
-          {event.title}
-        </li>
+        <DraggableEvent event={event} key={event.id} />
       )
     })
   }
 
   render() {
-    return <div id='external-events'>
-			<h3>Events</h3>
-      <ul className="list-group">
-          {this.renderEvents()}
-        </ul>
-		</div>;
+    return (
+      <div id='events'>
+  			<h3>Events</h3>
+        {this.renderEvents()}
+  		</div>
+    );
   }
 }
 
