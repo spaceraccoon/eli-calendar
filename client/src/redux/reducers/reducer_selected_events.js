@@ -10,9 +10,8 @@ export default function(state = [], action) {
       return nextEvents;
     }
     case DELETE_EVENT: {
-      console.log('hi');
       let { event } = action.payload;
-      return _.omit(state, event);
+      return _.pull(state, event);
     }
     default:
       return state;

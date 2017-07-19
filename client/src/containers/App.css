@@ -4306,8 +4306,7 @@ button,
 /* Yale Header :: Components
 -------------------------------------- */
 header.yale-header {
-  background: #00356B;
-  margin-bottom: 20px; }
+  background: #00356B; }
   header.yale-header .topper-logo a {
     color: #FFFFFF;
     text-decoration: none; }

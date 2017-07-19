@@ -9,8 +9,8 @@ export function moveEvent({ event }) {
   }
 }
 
-export function fetchEvents() {
-  const request = axios.get('/api/events');
+export function fetchEvents(values) {
+  const request = axios.post('/api/events', values);
 
   return {
     type: FETCH_EVENTS,

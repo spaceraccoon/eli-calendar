@@ -1,11 +1,13 @@
 const express = require('express');
 const path = require('path');
 const axios = require('axios');
+const bodyParser = require('body-parser');
 
 const app = express();
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
+app.use(bodyParser.json());
 
 // Put all API endpoints under '/api'
 app.get('/api', (req, res) => {
@@ -13,9 +15,17 @@ app.get('/api', (req, res) => {
   res.send('API placeholder');
 });
 
-app.get('/api/events', async (req, res) => {
+app.post('/api/events', async (req, res) => {
+  console.log(req.body);
+  let { categories, number } = req.body;
   try {
-    let response = await axios.get('http://calendar.yale.edu/feeder/main/eventsFeed.do?f=y&sort=dtstart.utc:asc&fexpr=(((vpath=%22/public/Aliases/Event%20Format/Classes,%20Demonstrations%20and%20Workshops%22)))%20and%20(entity_type=%22event%22%7Centity_type=%22todo%22)&skinName=list-json&count=200');
+    let categoriesQuery = '(categories.href!="/public/.bedework/categories/_Ongoing")'
+    if(categories && categories.length) {
+      categoriesQuery = categories.map((category) => `(vpath="/public/Aliases/Event Category/${category}")`);
+      categoriesQuery = `(${categoriesQuery.join(' or ')})`;
+    }
+
+    let response = await axios.get(`http://calendar.yale.edu/feeder/main/eventsFeed.do?f=y&sort=dtstart.utc:asc&fexpr=(${categoriesQuery})&skinName=list-json&count=${number}`);
     res.json(response.data);
   } catch (e) {
     res.send(e);

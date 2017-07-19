@@ -1,8 +1,23 @@
 .rbc-calendar {
   flex: 1;
-  min-height: 580px;
+  min-height: 640px;
+  margin-top: 10px;
 }
 
 .rbc-month-row {
   flex-basis: 0;
+}
+
+#events .rbc-event {
+  margin: 2px 0;
+}
+
+@media screen and (max-width: 39.9375em) {
+  #rbc-btn-right {
+    display: none;
+  }
+
+  .rbc-calendar {
+    min-height: 480px;
+  }
 }

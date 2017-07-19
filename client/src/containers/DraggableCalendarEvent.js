@@ -2,6 +2,9 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react'
 import { DragSource } from 'react-dnd';
 import BigCalendar from 'react-big-calendar'
+import { connect } from 'react-redux';
+
+import { deleteEvent } from '../redux/actions';
 
 /* drag sources */
 let eventSource = {
@@ -13,9 +16,9 @@ let eventSource = {
     const didDrop = monitor.didDrop();
 
     if (!didDrop) {
-      console.log('hey', event)
+      props.dispatch(deleteEvent({ event }));
     }
-  },
+  }
 }
 
 function collectSource(connect, monitor) {
@@ -28,10 +31,10 @@ function collectSource(connect, monitor) {
 const propTypes = {
   connectDragSource: PropTypes.func.isRequired,
   isDragging: PropTypes.bool.isRequired,
-  event: PropTypes.object.isRequired,
+  event: PropTypes.object.isRequired
 }
 
-class DraggableEvent extends Component {
+class DraggableCalendarEvent extends Component {
   render() {
     let { connectDragSource, isDragging, event } = this.props;
     let EventWrapper = BigCalendar.components.eventWrapper;
@@ -42,11 +45,10 @@ class DraggableEvent extends Component {
           {event.title}
         </div>)}
       </EventWrapper>
-
     );
   }
 }
 
-DraggableEvent.propTypes = propTypes;
+DraggableCalendarEvent.propTypes = propTypes;
 
-export default DragSource('event', eventSource, collectSource)(DraggableEvent);
+export default connect()(DragSource('event', eventSource, collectSource)(DraggableCalendarEvent));

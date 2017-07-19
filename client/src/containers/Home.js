@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import {
   Row,
   Column,
@@ -12,13 +11,8 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import './Calendar.css';
 import Calendar from './Calendar';
 import Sidebar from './Sidebar';
-import * as actions from '../redux/actions';
 
 class Home extends Component {
-  componentDidMount() {
-    this.props.fetchEvents();
-  }
-
   render() {
     return (
       <Row>
@@ -33,4 +27,4 @@ class Home extends Component {
   }
 }
 
-export default DragDropContext(HTML5Backend)(connect(null, actions)(Home));
+export default DragDropContext(HTML5Backend)(Home);

@@ -1,27 +1,35 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import moment from 'moment';
 import BigCalendar from 'react-big-calendar'
 
 import * as actions from '../redux/actions';
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
-import withDrop from './DropCalendar';
+import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
+import DraggableCalendarEvent from './DraggableCalendarEvent';
+import Toolbar from './Toolbar';
 
 BigCalendar.momentLocalizer(moment);
-const DropCalendar = withDrop(BigCalendar);
+const DropCalendar = withDragAndDrop(BigCalendar, { backend: false });
 
-class Calendar extends React.Component {
+class Calendar extends Component {
   onEventDrop({ event, start, end }) {
     this.props.moveEvent({ event });
   }
 
   render(){
+    let components = {
+      event: DraggableCalendarEvent,
+      toolbar: Toolbar
+    }
+
     return (
       <div>
         <DropCalendar
           popup
           events={this.props.selectedEvents}
           onEventDrop={this.onEventDrop.bind(this)}
+          components={components}
         />
       </div>
     )
