@@ -2,4 +2,4 @@
 Another Yale calendar
 
 ## Demo
-(Link)[https://mysterious-plains-69771.herokuapp.com/]
+[Link](https://mysterious-plains-69771.herokuapp.com/)
