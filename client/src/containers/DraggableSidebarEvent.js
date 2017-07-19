@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import { DragSource } from 'react-dnd';
 import BigCalendar from 'react-big-calendar'
 import { connect } from 'react-redux';
+import moment from 'moment';
+import _ from 'lodash';
 
 /* drag sources */
 let eventSource = {
@@ -28,11 +30,20 @@ class DraggableSidebarEvent extends Component {
   render() {
     let { connectDragSource, isDragging, event } = this.props;
     let EventWrapper = BigCalendar.components.eventWrapper;
+    let { title, start, end } = event;
+
+    function isSameDate(date1, date2) {
+      return _.isEqual(moment(date1).format('L'), moment(date2).format('L'))
+    }
 
     return (
       <EventWrapper event={event}>
         {connectDragSource(<div className="rbc-event" style={{ opacity: isDragging ? 0.5 : 1 }}>
-          {event.title}
+          <strong>
+            {moment(start).format("MM/DD").toString()}
+            {!isSameDate  (start, end) ? '-' + moment(end).format("MM/DD").toString() : ''}
+          </strong>
+          : {title}
         </div>)}
       </EventWrapper>
 

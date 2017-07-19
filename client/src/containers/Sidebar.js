@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import Select from 'react-select';
-import Slider from 'rc-slider';
-import { ThreeBounce } from 'better-react-spinkit'
+import { ThreeBounce } from 'better-react-spinkit';
+import Slider from 'react-slider';
 
 import * as actions from '../redux/actions';
 import DraggableSidebarEvent from './DraggableSidebarEvent';
-import 'react-select/dist/react-select.css';
-import 'rc-slider/assets/index.css';
+import './Sidebar.css';
 
 const CATEGORIES = [
   { label: 'Academic Calendar', value: 'Academic Calendar' },
@@ -19,7 +18,7 @@ const CATEGORIES = [
 	{ label: 'Cultural and International', value: 'Cultural and International' },
 	{ label: 'Diversity and Inclusion', value: 'Diversity and Inclusion' },
 	{ label: 'Health and Medicine', value: 'Health and Medicine' },
-	{ label: 'Law, Politics, and Society', value: 'Law, Politics, and Society' },
+	{ label: 'Law, Politics and Society', value: 'Law, Politics and Society' },
 	{ label: 'Libraries, Museums, and Galleries', value: 'Libraries, Museums, and Galleries' },
   { label: 'Science and Technology', value: 'Science and Technology' },
   { label: 'Social Sciences', value: 'Social Sciences' },
@@ -28,8 +27,6 @@ const CATEGORIES = [
 	{ label: 'Yale and New Haven', value: 'Yale and New Haven' },
 ];
 
-const TooltipSlider = Slider.createSliderWithTooltip(Slider);
-
 class Sidebar extends Component {
   constructor(props) {
     super(props);
@@ -37,14 +34,24 @@ class Sidebar extends Component {
       isLoading: false,
       options: CATEGORIES,
 			selectedCategories: [],
-      selectedNumber: 10
+      currentNumber: 10,
+      selectedNumber: 10,
+      searchValue: ''
     };
   }
 
-  async componentDidMount() {
-    this.setState({  isLoading: true });
-    await this.props.fetchEvents();
+  async reloadEvents() {
+    this.setState({ isLoading: true });
+    await this.props.fetchEvents({
+      categories: this.state.selectedCategories.map((category) => category.value),
+      number: this.state.selectedNumber,
+      search: this.state.searchValue
+    });
     this.setState({ isLoading: false });
+  }
+
+  async componentDidMount() {
+    await this.reloadEvents();
   }
 
   loadEvents() {
@@ -55,35 +62,55 @@ class Sidebar extends Component {
     })
   }
 
+  async handleSearchChange(event) {
+    await this.setState({ searchValue: event.target.value });
+    this.reloadEvents();
+  }
+
 	async handleSelectChange(value) {
-    console.log([value])
-		this.setState({ selectedCategories: value, isLoading: true });
-    await this.props.fetchEvents({
-      categories: [value],
-      number: this.state.selectedNumber
-    });
-    this.setState({ isLoading: false });
+		await this.setState({ selectedCategories: value });
+    this.reloadEvents();
 	}
 
-  async handleSliderChange(value) {
+  handleSliderChange(value) {
+    this.setState({ currentNumber: value });
+  }
+
+  async handleSliderAfterChange(value) {
     if(value !== this.state.selectedNumber) {
-      this.setState({ selectedNumber: value, isLoading: true });
-      await this.props.fetchEvents({
-        categories: this.state.selectedCategories,
-        number: value
-      });
-      this.setState({ isLoading: false });
+      await this.setState({ selectedNumber: value });
+      this.reloadEvents();
     }
   }
 
   render() {
     return (
       <div id='events'>
-  			<h3>Search Events</h3>
+  			<h3>Select Events</h3>
+        <label>Search</label>
+        <input type="text" value={this.state.searchValue} onChange={this.handleSearchChange.bind(this)} />
         <label>Categories</label>
-        <Select multi simpleValue value={this.state.selectedCategories} placeholder='Select Categories' options={this.state.options} onChange={this.handleSelectChange.bind(this)} />
+        <Select
+          multi
+          value={this.state.selectedCategories}
+          placeholder='Select Categories'
+          options={this.state.options}
+          onChange={this.handleSelectChange.bind(this)}
+        />
         <label>Number of Events</label>
-        <TooltipSlider min={1} max={50} defaultValue={10} trackStyle={{ backgroundColor: '#3174ad' }} handleStyle={[{ borderColor: '#3174ad' }]} onAfterChange={this.handleSliderChange.bind(this)} />
+        <Slider
+          min={1}
+          max={50}
+          defaultValue={10}
+          handleClassName={'slider-handle'}
+          withBars
+          barClassName={'slider-track'}
+          onAfterChange={this.handleSliderAfterChange.bind(this)}
+          onChange={this.handleSliderChange.bind(this)}
+        >
+          <div className="slider-handle-inner">{this.state.currentNumber}</div>
+        </Slider>
+        <label>Events</label>
         {this.state.isLoading ? <center><ThreeBounce size={20} color='#3174ad' /></center> : this.loadEvents() }
   		</div>
     );

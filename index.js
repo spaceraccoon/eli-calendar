@@ -16,16 +16,16 @@ app.get('/api', (req, res) => {
 });
 
 app.post('/api/events', async (req, res) => {
-  console.log(req.body);
-  let { categories, number } = req.body;
+  let { categories, number, search } = req.body;
   try {
     let categoriesQuery = '(categories.href!="/public/.bedework/categories/_Ongoing")'
     if(categories && categories.length) {
       categoriesQuery = categories.map((category) => `(vpath="/public/Aliases/Event Category/${category}")`);
       categoriesQuery = `(${categoriesQuery.join(' or ')})`;
     }
-
-    let response = await axios.get(`http://calendar.yale.edu/feeder/main/eventsFeed.do?f=y&sort=dtstart.utc:asc&fexpr=(${categoriesQuery})&skinName=list-json&count=${number}`);
+    let url = `http://calendar.yale.edu/feeder/main/eventsFeed.do?f=y&sort=dtstart.utc:asc&fexpr=(${categoriesQuery})&query=${search}&skinName=list-json&count=${number}`;
+    console.log(url);
+    let response = await axios.get(url);
     res.json(response.data);
   } catch (e) {
     res.send(e);
