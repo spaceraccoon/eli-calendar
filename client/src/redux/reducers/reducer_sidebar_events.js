@@ -7,6 +7,10 @@ import { FETCH_EVENTS } from '../actions/types';
 export default function(state = {}, action) {
   switch(action.type) {
     case FETCH_EVENTS: {
+      if (!action.payload.data) {
+        return state;
+      }
+      
       let { events } = action.payload.data.bwEventList;
       let eventsArray = events.map((event) => {
         return {
