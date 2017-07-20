@@ -1,0 +1,7 @@
+{
+  "name": "Eli Calendar",
+  "description": "Another Yale Calendar",
+  "repository": "https://github.com/spaceraccoon/eli-calendar",
+  "logo": "https://node-js-sample.herokuapp.com/node.png",
+  "keywords": ["node", "express", "react", "redux", "calendar"]
+}
