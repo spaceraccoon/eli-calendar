@@ -41,7 +41,7 @@ class Sidebar extends Component {
       selectedNumber: 10,
       searchValue: '',
       startDate: moment(),
-      endDate: moment()
+      endDate: moment().add(1, 'w')
     };
   }
 
