@@ -26,7 +26,6 @@ class Header extends Component {
               <TopBarRight className="navbar__right">
                 <Menu>
                   <MenuItem>
-                    <Link to="/login">Log in</Link>
                   </MenuItem>
                 </Menu>
               </TopBarRight>

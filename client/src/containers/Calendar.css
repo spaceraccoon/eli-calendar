@@ -1,7 +1,7 @@
 .rbc-calendar {
   flex: 1;
   min-height: 640px;
-  margin-top: 10px;
+  margin: 10px 0;
 }
 
 .rbc-month-row {
@@ -10,6 +10,14 @@
 
 #events .rbc-event {
   margin: 2px 0;
+}
+
+.rbc-event {
+  background-color: #286DC0;
+}
+
+.rbc-event a {
+  text-decoration: none;
 }
 
 @media screen and (max-width: 39.9375em) {

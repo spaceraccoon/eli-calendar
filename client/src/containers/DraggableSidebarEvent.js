@@ -5,6 +5,9 @@ import BigCalendar from 'react-big-calendar'
 import { connect } from 'react-redux';
 import moment from 'moment';
 import _ from 'lodash';
+import { Link } from 'react-router-dom';
+
+import * as actions from '../redux/actions';
 
 /* drag sources */
 let eventSource = {
@@ -27,6 +30,10 @@ const propTypes = {
 }
 
 class DraggableSidebarEvent extends Component {
+  handleIconClick(event) {
+    this.props.moveEvent({ event });
+  }
+
   render() {
     let { connectDragSource, isDragging, event } = this.props;
     let EventWrapper = BigCalendar.components.eventWrapper;
@@ -39,11 +46,18 @@ class DraggableSidebarEvent extends Component {
     return (
       <EventWrapper event={event}>
         {connectDragSource(<div className="rbc-event" style={{ opacity: isDragging ? 0.5 : 1 }}>
-          <strong>
-            {moment(start).format("MM/DD").toString()}
-            {!isSameDate  (start, end) ? '-' + moment(end).format("MM/DD").toString() : ''}
-          </strong>
-          : {title}
+          <span className="sidebar-event-icon" onClick={() => this.handleIconClick(event)}>
+            +
+          </span>
+          <Link to={`/events/${event.id}`}>
+            <span className="sidebar-event-label">
+              <strong>
+                {moment(start).format("MM/DD").toString()}
+                {!isSameDate  (start, end) ? '-' + moment(end).format("MM/DD").toString() : ''}
+              </strong>
+              : {title}
+            </span>
+          </Link>
         </div>)}
       </EventWrapper>
 
@@ -53,4 +67,8 @@ class DraggableSidebarEvent extends Component {
 
 DraggableSidebarEvent.propTypes = propTypes;
 
-export default connect()(DragSource('event', eventSource, collectSource)(DraggableSidebarEvent));
+function mapStateToProps(state) {
+  return { events: state.events };
+}
+
+export default DragSource('event', eventSource, collectSource)(connect(mapStateToProps, actions)(DraggableSidebarEvent));

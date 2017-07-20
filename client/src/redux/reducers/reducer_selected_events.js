@@ -1,17 +1,19 @@
 import _ from 'lodash';
+import Alert from 'react-s-alert';
 
 import { MOVE_EVENT, DELETE_EVENT } from '../actions/types';
 
-export default function(state = [], action) {
+export default function(state = {}, action) {
   switch(action.type) {
     case MOVE_EVENT: {
       let { event } = action.payload;
-      const nextEvents = _.union(state, [event]);
-      return nextEvents;
+      Alert.success(`Added ${event.title} to calendar`);
+      return { ...state, [event.id]: event };
     }
     case DELETE_EVENT: {
       let { event } = action.payload;
-      return _.pull(state, event);
+      Alert.success(`Deleted ${event.title} from calendar`);
+      return _.omit(state, event.id);
     }
     default:
       return state;

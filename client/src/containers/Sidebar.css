@@ -311,6 +311,7 @@
   border-top-right-radius: 2px;
   cursor: default;
   padding: 2px 5px;
+  width: 90%;
 }
 .Select--multi a.Select-value-label {
   color: #007eff;
@@ -327,14 +328,8 @@
   border-right: 1px solid #c2e0ff;
   /* Fallback color for IE 8 */
   border-right: 1px solid rgba(0, 126, 255, 0.24);
-  padding: 1px 5px 3px;
-}
-.Select--multi .Select-value-icon:hover,
-.Select--multi .Select-value-icon:focus {
-  background-color: #d8eafd;
-  /* Fallback color for IE 8 */
-  background-color: rgba(0, 113, 230, 0.08);
-  color: #0071e6;
+  text-align: center;
+  width: 10%;
 }
 .Select--multi .Select-value-icon:active {
   background-color: #c2e0ff;
@@ -370,7 +365,6 @@
   transition: all 0s ease-in-out;
   z-index: 0 !important;
 }
-
 .slider-handle-inner {
   color: #FFFFFF;
   text-align: center;
@@ -378,7 +372,6 @@
   top: 50%;
   transform: translateY(-50%);
 }
-
 .slider-track-0 {
   position: absolute;
   top: 0;
@@ -390,3 +383,54 @@
   transition: all 0s ease-in-out; }
   .slider-fill.is-dragging {
     transition: all 0s linear; }
+
+.rbc-event a {
+  color: inherit;
+}
+.sidebar-event-icon {
+  text-align: center;
+  width: 5%;
+}
+.sidebar-event-icon:hover,
+.sidebar-event-icon:focus {
+  font-size: 115%;
+  font-weight: bold;
+}
+.sidebar-event-label {
+  width: 95%;
+  border-bottom-right-radius: 2px;
+  border-top-right-radius: 2px;
+  padding: 2px 5px;
+}
+.sidebar-event-icon, .sidebar-event-label {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.react-datepicker-popper {
+  z-index: 5;
+}
+
+a.react-add-to-calendar__button {
+  display: inline-block;
+  text-align: center;
+  line-height: 1;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -webkit-transition: background-color 0.25s ease-out, color 0.25s ease-out;
+  -o-transition: background-color 0.25s ease-out, color 0.25s ease-out;
+  transition: background-color 0.25s ease-out, color 0.25s ease-out;
+  vertical-align: middle;
+  border: 1px solid transparent;
+  border-radius: 0;
+  padding: 0.8125rem 1.25rem;
+  margin: 0 0.5rem 1rem 0;
+  font-size: 0.9rem;
+  background-color: #286DC0;
+  color: #FFFFFF;
+  font-family: "Open Sans", sans-serif;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-decoration: none;
+}

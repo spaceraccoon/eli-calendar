@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const axios = require('axios');
 const bodyParser = require('body-parser');
+const moment = require('moment');
 
 const app = express();
 
@@ -10,21 +11,17 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 app.use(bodyParser.json());
 
 // Put all API endpoints under '/api'
-app.get('/api', (req, res) => {
-  // Return them as json
-  res.send('API placeholder');
-});
-
 app.post('/api/events', async (req, res) => {
-  let { categories, number, search } = req.body;
+  let { categories, number, search, start, end } = req.body;
   try {
     let categoriesQuery = '(categories.href!="/public/.bedework/categories/_Ongoing")'
     if(categories && categories.length) {
       categoriesQuery = categories.map((category) => `(vpath="/public/Aliases/Event Category/${category}")`);
       categoriesQuery = `(${categoriesQuery.join(' or ')})`;
     }
-    let url = `http://calendar.yale.edu/feeder/main/eventsFeed.do?f=y&sort=dtstart.utc:asc&fexpr=(${categoriesQuery})&query=${search}&skinName=list-json&count=${number}`;
-    console.log(url);
+    start = moment(start).format('YYYYMMDD');
+    end = moment(end).format('YYYYMMDD');
+    let url = `http://calendar.yale.edu/feeder/main/eventsFeed.do?f=y&sort=dtstart.utc:asc&fexpr=(${categoriesQuery})&query=${search}&skinName=list-json&count=${number}&start=${start}&end=${end}`;
     let response = await axios.get(url);
     res.json(response.data);
   } catch (e) {

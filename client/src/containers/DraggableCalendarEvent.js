@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { DragSource } from 'react-dnd';
 import BigCalendar from 'react-big-calendar'
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import { deleteEvent } from '../redux/actions';
 
@@ -40,11 +41,13 @@ class DraggableCalendarEvent extends Component {
     let EventWrapper = BigCalendar.components.eventWrapper;
 
     return (
-      <EventWrapper event={event}>
-        {connectDragSource(<div className="rbc-event" style={{ opacity: isDragging ? 0.5 : 1 }}>
-          {event.title}
-        </div>)}
-      </EventWrapper>
+      <Link to={`/events/${event.id}`}>
+        <EventWrapper event={event}>
+          {connectDragSource(<div className="rbc-event" style={{ opacity: isDragging ? 0.5 : 1 }}>
+            {event.title}
+          </div>)}
+        </EventWrapper>
+      </Link>
     );
   }
 }

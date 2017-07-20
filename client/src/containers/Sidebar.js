@@ -4,16 +4,19 @@ import _ from 'lodash';
 import Select from 'react-select';
 import { ThreeBounce } from 'better-react-spinkit';
 import Slider from 'react-slider';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
 
 import * as actions from '../redux/actions';
 import DraggableSidebarEvent from './DraggableSidebarEvent';
 import './Sidebar.css';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const CATEGORIES = [
   { label: 'Academic Calendar', value: 'Academic Calendar' },
   { label: 'Arts and Humanities', value: 'Arts and Humanities' },
   { label: 'Athletics and Recreation', value: 'Athletics and Recreation' },
-  { label: 'Entrepreneurship', value: 'Business and Entrepreneurship' },
+  { label: 'Business', value: 'Business and Entrepreneurship' },
   { label: 'Career', value: 'Career and Professional Services' },
 	{ label: 'Cultural and International', value: 'Cultural and International' },
 	{ label: 'Diversity and Inclusion', value: 'Diversity and Inclusion' },
@@ -36,7 +39,9 @@ class Sidebar extends Component {
 			selectedCategories: [],
       currentNumber: 10,
       selectedNumber: 10,
-      searchValue: ''
+      searchValue: '',
+      startDate: moment(),
+      endDate: moment()
     };
   }
 
@@ -45,7 +50,9 @@ class Sidebar extends Component {
     await this.props.fetchEvents({
       categories: this.state.selectedCategories.map((category) => category.value),
       number: this.state.selectedNumber,
-      search: this.state.searchValue
+      search: this.state.searchValue,
+      start: this.state.startDate,
+      end: this.state.endDate
     });
     this.setState({ isLoading: false });
   }
@@ -72,9 +79,23 @@ class Sidebar extends Component {
     this.reloadEvents();
 	}
 
-  handleSliderChange(value) {
-    this.setState({ currentNumber: value });
+  async handleDateChange({ startDate, endDate }) {
+    startDate = startDate || this.state.startDate
+    endDate = endDate || this.state.endDate
+
+    if (startDate.isAfter(endDate)) {
+      var temp = startDate
+      startDate = endDate
+      endDate = temp
+    }
+
+    await this.setState({ startDate, endDate })
+    this.reloadEvents();
   }
+
+  handleStartChange = (startDate) => this.handleDateChange({ startDate })
+
+  handleEndChange = (endDate) => this.handleDateChange({ endDate })
 
   async handleSliderAfterChange(value) {
     if(value !== this.state.selectedNumber) {
@@ -83,12 +104,16 @@ class Sidebar extends Component {
     }
   }
 
+  handleSliderChange(value) {
+    this.setState({ currentNumber: value });
+  }
+
   render() {
     return (
       <div id='events'>
-  			<h3>Select Events</h3>
+  			<h3>Browse Events</h3>
         <label>Search</label>
-        <input type="text" value={this.state.searchValue} onChange={this.handleSearchChange.bind(this)} />
+        <input type='text' value={this.state.searchValue} onChange={this.handleSearchChange.bind(this)} />
         <label>Categories</label>
         <Select
           multi
@@ -96,6 +121,21 @@ class Sidebar extends Component {
           placeholder='Select Categories'
           options={this.state.options}
           onChange={this.handleSelectChange.bind(this)}
+        />
+        <label>Date Range</label>
+        <DatePicker
+          selected={this.state.startDate}
+          selectsStart
+          startDate={this.state.startDate}
+          endDate={this.state.endDate}
+          onChange={this.handleStartChange.bind(this)}
+        />
+        <DatePicker
+          selected={this.state.endDate}
+          selectsEnd
+          startDate={this.state.startDate}
+          endDate={this.state.endDate}
+          onChange={this.handleEndChange.bind(this)}
         />
         <label>Number of Events</label>
         <Slider
@@ -108,7 +148,7 @@ class Sidebar extends Component {
           onAfterChange={this.handleSliderAfterChange.bind(this)}
           onChange={this.handleSliderChange.bind(this)}
         >
-          <div className="slider-handle-inner">{this.state.currentNumber}</div>
+          <div className='slider-handle-inner'>{this.state.currentNumber}</div>
         </Slider>
         <label>Events</label>
         {this.state.isLoading ? <center><ThreeBounce size={20} color='#3174ad' /></center> : this.loadEvents() }
@@ -118,7 +158,7 @@ class Sidebar extends Component {
 }
 
 function mapStateToProps(state) {
-  return { events: state.events };
+  return { events: state.sidebarEvents };
 }
 
 export default connect(mapStateToProps, actions)(Sidebar);

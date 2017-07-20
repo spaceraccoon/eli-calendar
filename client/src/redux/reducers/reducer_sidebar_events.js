@@ -20,9 +20,7 @@ export default function(state = {}, action) {
           'description': event.description.replace(/&rsquo;/g, "'").replace(/&rdquo;|&ldquo;/g, '"').replace(/&ndash;|&mdash;/g, '-')
         }
       });
-      let newState = { ...state, ..._.mapKeys(eventsArray, 'id') };
-      console.log(newState);
-      return { ...state, ..._.mapKeys(eventsArray, 'id') };
+      return _.mapKeys(eventsArray, 'id');
     }
     default:
       return state;

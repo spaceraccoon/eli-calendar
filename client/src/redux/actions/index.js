@@ -1,11 +1,23 @@
 import axios from 'axios';
 
-import { MOVE_EVENT, FETCH_EVENTS, DELETE_EVENT } from './types';
+import {
+  MOVE_EVENT,
+  SELECT_EVENT,
+  FETCH_EVENTS,
+  DELETE_EVENT
+} from './types';
 
-export function moveEvent({ event }) {
+export function moveEvent(event) {
   return {
     type: MOVE_EVENT,
-    payload: { event }
+    payload: event
+  }
+}
+
+export function selectEvent(event) {
+  return {
+    type: SELECT_EVENT,
+    payload: event
   }
 }
 
@@ -18,9 +30,9 @@ export function fetchEvents(values) {
   }
 }
 
-export function deleteEvent({ event }) {
+export function deleteEvent(event) {
   return {
     type: DELETE_EVENT,
-    payload: { event }
+    payload: event
   }
 }
