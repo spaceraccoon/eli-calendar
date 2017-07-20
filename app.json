@@ -2,6 +2,6 @@
   "name": "Eli Calendar",
   "description": "Another Yale Calendar",
   "repository": "https://github.com/spaceraccoon/eli-calendar",
-  "logo": "https://node-js-sample.herokuapp.com/node.png",
+  "logo": "http://giving.yale.edu/sites/default/files/imce/BoolaTakesManhattanSmall.JPG",
   "keywords": ["node", "express", "react", "redux", "calendar"]
 }
