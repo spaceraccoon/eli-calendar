@@ -3,7 +3,7 @@ Another Yale calendar built on React, Redux, and Express. Supports drag and drop
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-![Screenshot](./screenshot.jpg)
+![Screenshot](./client/public/screenshot.jpg)
 
 ## Demo
 [Link](https://mysterious-plains-69771.herokuapp.com/)
