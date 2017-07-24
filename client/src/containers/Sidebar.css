@@ -434,3 +434,7 @@ a.react-add-to-calendar__button {
   font-weight: bold;
   text-decoration: none;
 }
+
+#sidebar .rbc-event {
+  margin: 2px 0;
+}

@@ -110,7 +110,7 @@ class Sidebar extends Component {
 
   render() {
     return (
-      <div id='events'>
+      <div id='sidebar'>
   			<h3>Browse Events</h3>
         <label>Search</label>
         <input type='text' value={this.state.searchValue} onChange={this.handleSearchChange.bind(this)} />

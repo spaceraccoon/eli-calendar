@@ -10,7 +10,7 @@ import App from './containers/App';
 import registerServiceWorker from './registerServiceWorker';
 import reducers from './redux/reducers';
 
-const store = createStore(
+let store = createStore(
   reducers,
   undefined,
   compose (

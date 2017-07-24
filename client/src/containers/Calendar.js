@@ -56,7 +56,7 @@ class Calendar extends Component {
     }
 
     return (
-      <div>
+      <div id="calendar">
         <DropCalendar
           popup
           events={this.props.selectedEvents}

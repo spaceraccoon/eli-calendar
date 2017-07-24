@@ -5,6 +5,9 @@ import { compose, createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import promise from 'redux-promise';
 
+import Home from './Home';
+import Calendar from './Calendar';
+import Sidebar from './Sidebar';
 import reducers from '../redux/reducers';
 
 let store = createStore(
@@ -15,20 +18,30 @@ let store = createStore(
   )
 );
 
-import App from './App';
-
-describe('App', () => {
+describe('Home', () => {
   let wrapper;
 
   beforeEach(() => {
     wrapper = mount(
       <Provider store={store}>
         <MemoryRouter>
-          <App />
+          <Home />
         </MemoryRouter>
       </Provider>
     );
   });
 
   it('renders without crashing', () => {});
+
+  it('shows a calendar', () => {
+    expect(wrapper.find('#calendar')).toHaveLength(1);
+  })
+
+  it('shows a sidebar', () => {
+    expect(wrapper.find('#sidebar')).toHaveLength(1);
+  })
+
+  it('shows event page when sidebar event is clicked', () => {
+    expect(wrapper.find('#sidebar')).toHaveLength(1);
+  })
 });
