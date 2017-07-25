@@ -10,7 +10,6 @@ export default function(state = {}, action) {
       if (!action.payload.data) {
         return state;
       }
-
       let { events } = action.payload.data.bwEventList;
       let eventsArray = events.map((event) => {
         return {
@@ -25,7 +24,6 @@ export default function(state = {}, action) {
         }
       });
       let newState = { ...state, ..._.mapKeys(eventsArray, 'id') };
-      console.log(newState);
       return { ...state, ..._.mapKeys(eventsArray, 'id') };
     }
     default:

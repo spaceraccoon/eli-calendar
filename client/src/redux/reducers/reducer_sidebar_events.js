@@ -10,7 +10,6 @@ export default function(state = {}, action) {
       if (!action.payload.data) {
         return state;
       }
-      
       let { events } = action.payload.data.bwEventList;
       let eventsArray = events.map((event) => {
         return {

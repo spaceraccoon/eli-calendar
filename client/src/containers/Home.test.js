@@ -41,7 +41,4 @@ describe('Home', () => {
     expect(wrapper.find('#sidebar')).toHaveLength(1);
   })
 
-  it('shows event page when sidebar event is clicked', () => {
-    expect(wrapper.find('#sidebar')).toHaveLength(1);
-  })
 });
