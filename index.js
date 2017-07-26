@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 app.post('/api/events', async (req, res) => {
   let { categories, number, search, start, end } = req.body;
   try {
-    let categoriesQuery = '(categories.href!="/public/.bedework/categories/_Ongoing")'
+    let categoriesQuery = '()'
     if(categories && categories.length) {
       categoriesQuery = categories.map((category) => `(vpath="/public/Aliases/Event Category/${category}")`);
       categoriesQuery = `(${categoriesQuery.join(' or ')})`;
