@@ -24,7 +24,6 @@ export default function(state = {}, action) {
           'description': he.decode(event.description)
         }
       });
-      let newState = { ...state, ..._.mapKeys(eventsArray, 'id') };
       return { ...state, ..._.mapKeys(eventsArray, 'id') };
     }
     default:
